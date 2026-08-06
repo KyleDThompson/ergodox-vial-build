@@ -1,0 +1,5 @@
+#pragma once
+
+#define TAPPING_TERM 200
+#define PERMISSIVE_HOLD
+#define VIAL_KEYBOARD_UID { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08 }

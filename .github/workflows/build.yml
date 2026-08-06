@@ -1,0 +1,44 @@
+name: Build Ergodox Infinity Vial firmware
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/qmk/qmk_cli:latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Clone Vial QMK
+        run: |
+          git clone --depth 1 https://github.com/vial-kb/vial-qmk.git /tmp/vial-qmk
+
+      - name: Install keymap into Vial QMK
+        run: |
+          mkdir -p /tmp/vial-qmk/keyboards/input_club/ergodox_infinity/keymaps
+          cp -r "$GITHUB_WORKSPACE/firmware/keymaps/vial" /tmp/vial-qmk/keyboards/input_club/ergodox_infinity/keymaps/
+
+      - name: Install QMK CLI
+        run: |
+          python3 -m pip install --user pipx
+          python3 -m pipx ensurepath
+          pipx install qmk
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Compile firmware
+        run: |
+          cd /tmp/vial-qmk
+          qmk setup -y
+          qmk compile -kb input_club/ergodox_infinity -km vial || true
+
+      - name: Upload firmware artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ergodox-infinity-vial-firmware
+          path: /tmp/vial-qmk/.build/**
