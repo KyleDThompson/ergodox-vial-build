@@ -8,7 +8,7 @@ concurrency:
 env:
   REGEX_ANSI_COLOR: 's/\x1b\[[0-9;]*[mGKHF]//g'
   REGEX_MAKE_OUTPUT: '/^g*make\[1]: \(Enter\|Leav\)ing directory ''/d'
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: 'true'
 
 permissions: {}
 
