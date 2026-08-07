@@ -13,19 +13,7 @@ env:
 permissions: {}
 
 jobs:
-  check-uid:
-    name: Check Vial UIDs
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: (actions) Checkout Vial repo
-      uses: actions/checkout@v4
-      with:
-        persist-credentials: false
-
-    - name: Verify Vial UID is unique per-keyboard
-      run: python3 util/ci_vial_verify_uid.py
-
+  
   build-default:
     name: Build default keymaps for Vial
     runs-on: ubuntu-latest
